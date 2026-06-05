@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Financeiro</title>
     <link rel="stylesheet" href="styles.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
 </head>
+
 <body>
     <div class="app-shell">
         <aside class="sidebar" id="sidebar">
@@ -41,6 +48,7 @@
                     <button class="icon-button" id="nextMonth" aria-label="Próximo mês">›</button>
                 </div>
                 <div class="topbar-actions">
+                    <button class="ghost-button" id="createMonth">Criar mes</button>
                     <button class="ghost-button" id="themeToggle">Tema escuro</button>
                     <button class="primary-button" data-action="quick-open">Lançamento rápido</button>
                 </div>
@@ -90,4 +98,5 @@
     <input id="importInput" type="file" accept="application/json" hidden>
     <script src="app.js"></script>
 </body>
+
 </html>

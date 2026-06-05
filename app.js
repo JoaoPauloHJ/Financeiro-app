@@ -29,7 +29,7 @@ const schemas = {
         fields: [
             { key: "descricao", label: "Descrição", type: "text", required: true, placeholder: "Salário" },
             { key: "valor", label: "Valor", type: "number", required: true, step: "0.01" },
-            { key: "data", label: "Data", type: "date", required: true },
+            { key: "mes", label: "Mes de referencia", type: "month", required: true },
             { key: "recebido", label: "Recebido?", type: "select", options: ["Sim", "Não"] },
             { key: "categoria", label: "Categoria", type: "select", options: ["Salário", "Adiantamento", "Duda", "Gabriel", "Aviso", "Aluguel", "Outros"] }
         ]
@@ -40,6 +40,7 @@ const schemas = {
         fields: [
             { key: "descricao", label: "Descrição", type: "text", required: true, placeholder: "Energia" },
             { key: "valor", label: "Valor", type: "number", required: true, step: "0.01" },
+            { key: "mes", label: "Mes de referencia", type: "month", required: true },
             { key: "pago", label: "Pago?", type: "select", options: ["Sim", "Não"] },
             { key: "vencimento", label: "Vencimento", type: "number", min: "1", max: "31" },
             { key: "categoria", label: "Categoria", type: "select", options: ["Moradia", "Serviços", "Internet", "Celular", "Casa", "Outros"] }
@@ -52,6 +53,7 @@ const schemas = {
             { key: "descricao", label: "Descrição", type: "text", required: true, placeholder: "Mercado" },
             { key: "valor", label: "Valor", type: "number", required: true, step: "0.01" },
             { key: "data", label: "Data", type: "date", required: true },
+            { key: "mes", label: "Mes de referencia", type: "month", required: true },
             { key: "categoria", label: "Categoria", type: "select", options: ["Mercado", "Farmácia", "Lazer", "Combustível", "Restaurante", "Outros"] }
         ]
     },
@@ -74,7 +76,8 @@ const schemas = {
             { key: "parcelas", label: "Parcelas", type: "number", required: true, min: "1" },
             { key: "parcelaAtual", label: "Parcela atual", type: "number", required: true, min: "1" },
             { key: "cartaoId", label: "Cartão", type: "select", dynamic: "cartoes" },
-            { key: "data", label: "Data", type: "date", required: true }
+            { key: "data", label: "Data", type: "date", required: true },
+            { key: "mes", label: "Mes da fatura", type: "month", required: true }
         ]
     },
     investimentos: {
@@ -85,6 +88,7 @@ const schemas = {
             { key: "produto", label: "Produto", type: "text", required: true, placeholder: "CDI" },
             { key: "valorAplicado", label: "Valor aplicado", type: "number", required: true, step: "0.01" },
             { key: "data", label: "Data", type: "date", required: true },
+            { key: "mes", label: "Mes de referencia", type: "month", required: true },
             { key: "rentabilidade", label: "Rentabilidade %", type: "number", step: "0.01" }
         ]
     },
@@ -93,6 +97,7 @@ const schemas = {
         collection: "ganhos",
         fields: [
             { key: "data", label: "Data", type: "date", required: true },
+            { key: "mes", label: "Mes de referencia", type: "month", required: true },
             { key: "valor", label: "Valor", type: "number", required: true, step: "0.01" },
             { key: "categoria", label: "Categoria", type: "select", options: ["Ganhos Mercado Pago", "Ganhos CDI", "Cashback", "Rendimentos"] }
         ]
@@ -113,21 +118,21 @@ const schemas = {
 const seed = {
     theme: "light",
     receitas: [
-        item({ descricao: "Adiantamento", valor: 1558.03, data: today, recebido: "Não", categoria: "Adiantamento" }),
-        item({ descricao: "Salário", valor: 1290.96, data: today, recebido: "Não", categoria: "Salário" }),
-        item({ descricao: "Duda", valor: 800.64, data: today, recebido: "Não", categoria: "Duda" }),
-        item({ descricao: "Gabriel", valor: 9, data: today, recebido: "Não", categoria: "Gabriel" }),
-        item({ descricao: "Mãe Algar Abril", valor: 89.98, data: today, recebido: "Não", categoria: "Outros" }),
-        item({ descricao: "Aviso", valor: 600, data: today, recebido: "Não", categoria: "Aviso" })
+        item({ descricao: "Adiantamento", valor: 1558.03, mes: currentMonth, recebido: "Não", categoria: "Adiantamento" }),
+        item({ descricao: "Salário", valor: 1290.96, mes: currentMonth, recebido: "Não", categoria: "Salário" }),
+        item({ descricao: "Duda", valor: 800.64, mes: currentMonth, recebido: "Não", categoria: "Duda" }),
+        item({ descricao: "Gabriel", valor: 9, mes: currentMonth, recebido: "Não", categoria: "Gabriel" }),
+        item({ descricao: "Mãe Algar Abril", valor: 89.98, mes: currentMonth, recebido: "Não", categoria: "Outros" }),
+        item({ descricao: "Aviso", valor: 600, mes: currentMonth, recebido: "Não", categoria: "Aviso" })
     ],
     fixas: [
-        item({ descricao: "Energia", valor: 229.84, pago: "Não", vencimento: 10, categoria: "Casa" }),
-        item({ descricao: "Água", valor: 139.82, pago: "Não", vencimento: 12, categoria: "Casa" }),
-        item({ descricao: "Algar Mãe Abril", valor: 89.98, pago: "Não", vencimento: 15, categoria: "Internet" }),
-        item({ descricao: "Algar Casa Abril", valor: 99.35, pago: "Não", vencimento: 15, categoria: "Internet" }),
-        item({ descricao: "Plano/Cel", valor: 125, pago: "Não", vencimento: 20, categoria: "Celular" }),
-        item({ descricao: "Caixa / Conta", valor: 16, pago: "Não", vencimento: 22, categoria: "Serviços" }),
-        item({ descricao: "Parcela / Casa", valor: 825, pago: "Não", vencimento: 25, categoria: "Moradia" })
+        item({ descricao: "Energia", valor: 229.84, mes: currentMonth, pago: "Não", vencimento: 10, categoria: "Casa" }),
+        item({ descricao: "Água", valor: 139.82, mes: currentMonth, pago: "Não", vencimento: 12, categoria: "Casa" }),
+        item({ descricao: "Algar Mãe Abril", valor: 89.98, mes: currentMonth, pago: "Não", vencimento: 15, categoria: "Internet" }),
+        item({ descricao: "Algar Casa Abril", valor: 99.35, mes: currentMonth, pago: "Não", vencimento: 15, categoria: "Internet" }),
+        item({ descricao: "Plano/Cel", valor: 125, mes: currentMonth, pago: "Não", vencimento: 20, categoria: "Celular" }),
+        item({ descricao: "Caixa / Conta", valor: 16, mes: currentMonth, pago: "Não", vencimento: 22, categoria: "Serviços" }),
+        item({ descricao: "Parcela / Casa", valor: 825, mes: currentMonth, pago: "Não", vencimento: 25, categoria: "Moradia" })
     ],
     variaveis: [],
     cartoes: [
@@ -137,14 +142,14 @@ const seed = {
     ],
     compras: [],
     investimentos: [
-        item({ instituicao: "BB Brasil", produto: "CDI", valorAplicado: 24.72, data: today, rentabilidade: 1 }),
-        item({ instituicao: "BB Brasil", produto: "Cofrinho", valorAplicado: 22.01, data: today, rentabilidade: 1 })
+        item({ instituicao: "BB Brasil", produto: "CDI", valorAplicado: 24.72, data: today, mes: currentMonth, rentabilidade: 1 }),
+        item({ instituicao: "BB Brasil", produto: "Cofrinho", valorAplicado: 22.01, data: today, mes: currentMonth, rentabilidade: 1 })
     ],
     ganhos: [
-        item({ data: `${today.slice(0, 8)}03`, valor: 0.07, categoria: "Ganhos Mercado Pago" }),
-        item({ data: `${today.slice(0, 8)}01`, valor: 5.18, categoria: "Ganhos CDI" }),
-        item({ data: `${today.slice(0, 8)}02`, valor: 9.58, categoria: "Ganhos CDI" }),
-        item({ data: `${today.slice(0, 8)}03`, valor: 9.51, categoria: "Ganhos CDI" })
+        item({ data: `${today.slice(0, 8)}03`, mes: currentMonth, valor: 0.07, categoria: "Ganhos Mercado Pago" }),
+        item({ data: `${today.slice(0, 8)}01`, mes: currentMonth, valor: 5.18, categoria: "Ganhos CDI" }),
+        item({ data: `${today.slice(0, 8)}02`, mes: currentMonth, valor: 9.58, categoria: "Ganhos CDI" }),
+        item({ data: `${today.slice(0, 8)}03`, mes: currentMonth, valor: 9.51, categoria: "Ganhos CDI" })
     ],
     reserva: {
         mesAnterior: 23668.85,
@@ -155,15 +160,15 @@ const seed = {
 };
 
 seed.compras = [
-    item({ descricao: "Lay Carro e Moto", valor: 230, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today }),
-    item({ descricao: "Alura", valor: 93, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today }),
-    item({ descricao: "Manual", valor: 69.56, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today }),
-    item({ descricao: "Chat GPT", valor: 41.47, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today }),
-    item({ descricao: "IOF Chat", valor: 1.45, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today }),
-    item({ descricao: "Pneus", valor: 108.57, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[1].id, data: today }),
-    item({ descricao: "TV", valor: 124.38, parcelas: 18, parcelaAtual: 3, cartaoId: seed.cartoes[1].id, data: today }),
-    item({ descricao: "Sombrit 5/8", valor: 33.53, parcelas: 8, parcelaAtual: 5, cartaoId: seed.cartoes[1].id, data: today }),
-    item({ descricao: "Roupa, Cama", valor: 206.08, parcelas: 12, parcelaAtual: 8, cartaoId: seed.cartoes[2].id, data: today })
+    item({ descricao: "Lay Carro e Moto", valor: 230, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today, mes: currentMonth }),
+    item({ descricao: "Alura", valor: 93, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today, mes: currentMonth }),
+    item({ descricao: "Manual", valor: 69.56, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today, mes: currentMonth }),
+    item({ descricao: "Chat GPT", valor: 41.47, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today, mes: currentMonth }),
+    item({ descricao: "IOF Chat", valor: 1.45, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[0].id, data: today, mes: currentMonth }),
+    item({ descricao: "Pneus", valor: 108.57, parcelas: 1, parcelaAtual: 1, cartaoId: seed.cartoes[1].id, data: today, mes: currentMonth }),
+    item({ descricao: "TV", valor: 124.38, parcelas: 18, parcelaAtual: 3, cartaoId: seed.cartoes[1].id, data: today, mes: currentMonth }),
+    item({ descricao: "Sombrit 5/8", valor: 33.53, parcelas: 8, parcelaAtual: 5, cartaoId: seed.cartoes[1].id, data: today, mes: currentMonth }),
+    item({ descricao: "Roupa, Cama", valor: 206.08, parcelas: 12, parcelaAtual: 8, cartaoId: seed.cartoes[2].id, data: today, mes: currentMonth })
 ];
 
 let state = loadState();
@@ -194,13 +199,13 @@ function item(data){
 function loadState(){
     const saved = localStorage.getItem(STORAGE_KEY);
     if(!saved){
-        return clone(seed);
+        return normalizeState(clone(seed));
     }
 
     try{
-        return { ...clone(seed), ...JSON.parse(saved) };
+        return normalizeState({ ...clone(seed), ...JSON.parse(saved) });
     }catch(error){
-        return clone(seed);
+        return normalizeState(clone(seed));
     }
 }
 
@@ -265,6 +270,8 @@ function bindGlobalEvents(){
         setSelectedMonth(addMonths(selectedMonth, 1));
     });
 
+    document.getElementById("createMonth").addEventListener("click", createMonthFromPrevious);
+
     document.querySelectorAll("[data-action='quick-open']").forEach(button => {
         button.addEventListener("click", openQuick);
     });
@@ -311,14 +318,15 @@ function render(){
 
 function calc(){
     const receitasDoMes = bySelectedMonth(state.receitas);
+    const fixasDoMes = bySelectedMonth(state.fixas);
     const variaveisDoMes = bySelectedMonth(state.variaveis);
     const comprasDoMes = bySelectedMonth(state.compras);
 
     const receitas = sum(receitasDoMes, "valor");
     const recebido = sum(receitasDoMes.filter(x => x.recebido === "Sim"), "valor");
     const receitaPendente = receitas - recebido;
-    const fixas = sum(state.fixas, "valor");
-    const fixasPagas = sum(state.fixas.filter(x => x.pago === "Sim"), "valor");
+    const fixas = sum(fixasDoMes, "valor");
+    const fixasPagas = sum(fixasDoMes.filter(x => x.pago === "Sim"), "valor");
     const fixasPendentes = fixas - fixasPagas;
     const variaveis = sum(variaveisDoMes, "valor");
     const cartoes = sum(comprasDoMes, "valor");
@@ -368,7 +376,7 @@ function fixedMetrics(){
 
 function variableMetrics(){
     const mes = bySelectedMonth(state.variaveis);
-    const ano = state.variaveis.filter(x => String(x.data || "").slice(0, 4) === selectedMonth.slice(0, 4));
+    const ano = state.variaveis.filter(x => recordMonth(x).slice(0, 4) === selectedMonth.slice(0, 4));
     return [
         [`Total de ${monthLabel(selectedMonth)}`, sum(mes, "valor")],
         ["Total anual", sum(ano, "valor")],
@@ -388,7 +396,7 @@ function investmentMetrics(){
 
 function gainMetrics(){
     const mes = bySelectedMonth(state.ganhos);
-    const ano = state.ganhos.filter(x => String(x.data || "").slice(0, 4) === selectedMonth.slice(0, 4));
+    const ano = state.ganhos.filter(x => recordMonth(x).slice(0, 4) === selectedMonth.slice(0, 4));
     return [
         [`Total de ${monthLabel(selectedMonth)}`, sum(mes, "valor")],
         ["Total do ano", sum(ano, "valor")],
@@ -445,19 +453,22 @@ function renderCardsPage(){
             ${metric("Parcelas futuras", futureInstallments(), "negative")}
             ${metric("Limite disponível", totalAvailableLimit(), "positive")}
         </section>
-        <section class="split-grid">
-            <div class="panel list-panel">
-                <h3>Cartões cadastrados</h3>
-                <div class="stack">
-                    ${state.cartoes.map(cardSummary).join("")}
-                </div>
-            </div>
-            <div class="panel list-panel">
-                <h3>Compras parceladas</h3>
-                <div class="stack">
-                    ${state.compras.map(purchaseSummary).join("") || empty("Nenhuma compra cadastrada.")}
-                </div>
-            </div>
+        <section class="cards-grid-3">
+            ${state.cartoes.map(card => {
+                const compras = bySelectedMonth(state.compras).filter(x => x.cartaoId === card.id);
+                const utilizado = sum(compras, "valor");
+                const disponivel = num(card.limite) - utilizado;
+                return `
+                    <div class="panel list-panel">
+                        <h3>${card.nome}</h3>
+                        <div class="stack">
+                            <div class="mini-item"><strong>Limite</strong><strong>${currency(card.limite)}</strong></div>
+                            <div class="mini-item"><strong>Utilizado</strong><strong>${currency(utilizado)}</strong></div>
+                            <div class="mini-item"><strong>Disponível</strong><strong>${currency(disponivel)}</strong></div>
+                            ${compras.map(purchaseSummary).join("") || "<p>Nenhuma compra.</p>"}
+                        </div>
+                    </div>`;
+            }).join("")}
         </section>
     `;
 }
@@ -642,6 +653,7 @@ function reportSchema(){
             { key: "origem", label: "Origem" },
             { key: "descricao", label: "Descrição" },
             { key: "categoria", label: "Categoria" },
+            { key: "mes", label: "Mes" },
             { key: "data", label: "Data" },
             { key: "cartao", label: "Cartão" },
             { key: "valor", label: "Valor" }
@@ -773,12 +785,13 @@ function handleQuick(event){
     const descricao = match[3].trim();
     const categoria = guessCategory(descricao, signal);
     const data = defaultDateForSelectedMonth();
+    const mes = selectedMonth;
 
     if(signal === "+"){
-        state.receitas.push(item({ descricao, valor, data, recebido: "Sim", categoria }));
+        state.receitas.push(item({ descricao, valor, mes, recebido: "Sim", categoria }));
         activeRoute = "receitas";
     }else{
-        state.variaveis.push(item({ descricao, valor, data, categoria }));
+        state.variaveis.push(item({ descricao, valor, data, mes, categoria }));
         activeRoute = "variaveis";
     }
 
@@ -822,12 +835,64 @@ function setSelectedMonth(month){
     render();
 }
 
+function createMonthFromPrevious(){
+    const targetMonth = selectedMonth;
+    const sourceMonth = addMonths(targetMonth, -1);
+
+    if(monthHasBaseData(targetMonth)){
+        alert(`O mes ${monthLabel(targetMonth)} ja tem receitas, despesas fixas ou compras cadastradas.`);
+        return;
+    }
+
+    const receitas = state.receitas
+        .filter(row => recordMonth(row) === sourceMonth)
+        .map(row => {
+            const { id, ...data } = row;
+            return item({ ...data, mes: targetMonth, recebido: "Não" });
+        });
+
+    const fixas = state.fixas
+        .filter(row => recordMonth(row) === sourceMonth)
+        .map(row => {
+            const { id, ...data } = row;
+            return item({ ...data, mes: targetMonth, pago: "Não" });
+        });
+
+    const compras = state.compras
+        .filter(row => recordMonth(row) === sourceMonth && num(row.parcelaAtual) < num(row.parcelas))
+        .map(row => {
+            const { id, ...data } = row;
+            return item({
+                ...data,
+                mes: targetMonth,
+                data: `${targetMonth}-${String(new Date(row.data || `${sourceMonth}-01`).getDate()).padStart(2, "0")}`,
+                parcelaAtual: num(row.parcelaAtual) + 1
+            });
+        });
+
+    if(!receitas.length && !fixas.length && !compras.length){
+        alert(`Nao encontrei dados em ${monthLabel(sourceMonth)} para preparar ${monthLabel(targetMonth)}.`);
+        return;
+    }
+
+    state.receitas.push(...receitas);
+    state.fixas.push(...fixas);
+    state.compras.push(...compras);
+    saveState();
+    render();
+    alert(`Mes ${monthLabel(targetMonth)} criado com ${receitas.length} receitas, ${fixas.length} contas fixas e ${compras.length} parcelas.`);
+}
+
+function monthHasBaseData(month){
+    return [state.receitas, state.fixas, state.compras].some(rows => rows.some(row => recordMonth(row) === month));
+}
+
 function filteredRows(rows, report = false){
     const query = document.getElementById("globalSearch").value.toLowerCase().trim();
     return rows.filter(row => {
-        const date = String(row.data || "");
-        const monthOk = !filters.month || !date || date.slice(0, 7) === filters.month || !("data" in row);
-        const yearOk = !filters.year || !date || date.slice(0, 4) === filters.year || !("data" in row);
+        const month = recordMonth(row);
+        const monthOk = !filters.month || !month || month === filters.month;
+        const yearOk = !filters.year || !month || month.slice(0, 4) === filters.year;
         const categoryOk = !filters.category || row.categoria === filters.category;
         const cardOk = !report || !filters.card || row.cartaoId === filters.card || row.cartao === cardName(filters.card);
         const queryOk = !query || JSON.stringify(row).toLowerCase().includes(query);
@@ -837,12 +902,12 @@ function filteredRows(rows, report = false){
 
 function allRows(){
     return [
-        ...state.receitas.map(x => ({ origem: "Receita", descricao: x.descricao, categoria: x.categoria, data: x.data, valor: x.valor })),
-        ...state.fixas.map(x => ({ origem: "Despesa Fixa", descricao: x.descricao, categoria: x.categoria, data: "", valor: x.valor })),
-        ...state.variaveis.map(x => ({ origem: "Despesa Variável", descricao: x.descricao, categoria: x.categoria, data: x.data, valor: x.valor })),
-        ...state.compras.map(x => ({ origem: "Cartão", descricao: x.descricao, categoria: "Cartão de Crédito", data: x.data, cartaoId: x.cartaoId, cartao: cardName(x.cartaoId), valor: x.valor })),
-        ...state.investimentos.map(x => ({ origem: "Investimento", descricao: x.produto, categoria: x.instituicao, data: x.data, valor: x.valorAplicado })),
-        ...state.ganhos.map(x => ({ origem: "Ganho", descricao: x.categoria, categoria: x.categoria, data: x.data, valor: x.valor }))
+        ...state.receitas.map(x => ({ origem: "Receita", descricao: x.descricao, categoria: x.categoria, mes: recordMonth(x), valor: x.valor })),
+        ...state.fixas.map(x => ({ origem: "Despesa Fixa", descricao: x.descricao, categoria: x.categoria, mes: recordMonth(x), valor: x.valor })),
+        ...state.variaveis.map(x => ({ origem: "Despesa Variável", descricao: x.descricao, categoria: x.categoria, data: x.data, mes: recordMonth(x), valor: x.valor })),
+        ...state.compras.map(x => ({ origem: "Cartão", descricao: x.descricao, categoria: "Cartão de Crédito", data: x.data, mes: recordMonth(x), cartaoId: x.cartaoId, cartao: cardName(x.cartaoId), valor: x.valor })),
+        ...state.investimentos.map(x => ({ origem: "Investimento", descricao: x.produto, categoria: x.instituicao, data: x.data, mes: recordMonth(x), valor: x.valorAplicado })),
+        ...state.ganhos.map(x => ({ origem: "Ganho", descricao: x.categoria, categoria: x.categoria, data: x.data, mes: recordMonth(x), valor: x.valor }))
     ];
 }
 
@@ -978,7 +1043,7 @@ function drawLine(id, data, color = "#06b6d4"){
 }
 
 function groupByCategory(){
-    const rows = [...state.fixas, ...bySelectedMonth(state.variaveis)];
+    const rows = [...bySelectedMonth(state.fixas), ...bySelectedMonth(state.variaveis)];
     const map = {};
     rows.forEach(row => {
         map[row.categoria || "Outros"] = (map[row.categoria || "Outros"] || 0) + num(row.valor);
@@ -989,8 +1054,9 @@ function groupByCategory(){
 function monthlyEvolution(){
     const months = lastMonths(6);
     return months.map(month => {
-        const receitas = sum(state.receitas.filter(x => String(x.data || "").slice(0, 7) === month.value), "valor");
-        const despesas = sum([...state.variaveis, ...state.compras].filter(x => String(x.data || "").slice(0, 7) === month.value), "valor") + calc().fixas;
+        const receitas = sum(state.receitas.filter(x => recordMonth(x) === month.value), "valor");
+        const fixas = sum(state.fixas.filter(x => recordMonth(x) === month.value), "valor");
+        const despesas = sum([...state.variaveis, ...state.compras].filter(x => recordMonth(x) === month.value), "valor") + fixas;
         return { label: month.label, value: Math.max(receitas - despesas, 0) };
     });
 }
@@ -1021,7 +1087,7 @@ function importJson(event){
     const reader = new FileReader();
     reader.onload = () => {
         try{
-            state = { ...clone(seed), ...JSON.parse(reader.result) };
+            state = normalizeState({ ...clone(seed), ...JSON.parse(reader.result) });
             saveState();
             render();
             alert("Backup importado com sucesso.");
@@ -1092,6 +1158,7 @@ function cardName(id){
 }
 
 function defaultFieldValue(field){
+    if(field.type === "month") return selectedMonth;
     if(field.type === "date") return defaultDateForSelectedMonth();
     if(field.type === "number") return "";
     if(field.type === "select") return field.options ? field.options[0] : state.cartoes[0]?.id;
@@ -1104,7 +1171,22 @@ function yearOptions(){
 }
 
 function bySelectedMonth(rows){
-    return rows.filter(row => String(row.data || "").slice(0, 7) === selectedMonth);
+    return rows.filter(row => recordMonth(row) === selectedMonth);
+}
+
+function recordMonth(row){
+    return String(row.mes || row.competencia || row.data || "").slice(0, 7);
+}
+
+function normalizeState(nextState){
+    ["receitas", "fixas", "variaveis", "compras", "investimentos", "ganhos"].forEach(collection => {
+        nextState[collection] = (nextState[collection] || []).map(row => ({
+            ...row,
+            mes: recordMonth(row) || nextState.selectedMonth || currentMonth
+        }));
+    });
+
+    return nextState;
 }
 
 function addMonths(month, amount){
@@ -1180,3 +1262,11 @@ window.backupJson = backupJson;
 window.exportCsv = exportCsv;
 window.exportExcel = exportExcel;
 window.resetData = resetData;
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js")
+            .then(() => console.log("PWA ativo"))
+            .catch(err => console.log(err));
+    });
+}
