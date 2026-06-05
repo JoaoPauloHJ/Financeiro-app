@@ -1,6 +1,6 @@
 const CACHE_NAME = "financeiro-v1";
 
-const urlsToCache = [
+const urlsToCache =  [
   "/",
   "/index.html",
   "/styles.css",
