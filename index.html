@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Financeiro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-mark">R$</div>
+                <div>
+                    <strong>Financeiro</strong>
+                    <span>Controle pessoal</span>
+                </div>
+            </div>
+
+            <nav class="nav" id="nav"></nav>
+
+            <div class="sidebar-summary">
+                <span>Valor disponível</span>
+                <strong id="sideAvailable">R$ 0,00</strong>
+            </div>
+        </aside>
+
+        <div class="main-area">
+            <header class="topbar">
+                <button class="icon-button mobile-only" id="menuToggle" aria-label="Abrir menu">☰</button>
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input id="globalSearch" type="search" placeholder="Buscar em todo o financeiro">
+                </div>
+                <div class="month-switcher" aria-label="Mês em visualização">
+                    <button class="icon-button" id="prevMonth" aria-label="Mês anterior">‹</button>
+                    <label>
+                        <span>Mês</span>
+                        <input id="activeMonth" type="month">
+                    </label>
+                    <button class="icon-button" id="nextMonth" aria-label="Próximo mês">›</button>
+                </div>
+                <div class="topbar-actions">
+                    <button class="ghost-button" id="themeToggle">Tema escuro</button>
+                    <button class="primary-button" data-action="quick-open">Lançamento rápido</button>
+                </div>
+            </header>
+
+            <main class="content" id="app"></main>
+        </div>
+    </div>
+
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop">
+        <section class="modal">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow" id="modalKicker">Cadastro</p>
+                    <h2 id="modalTitle">Registro</h2>
+                </div>
+                <button class="icon-button" id="modalClose" aria-label="Fechar">×</button>
+            </div>
+            <form id="recordForm" class="form-grid"></form>
+        </section>
+    </div>
+
+    <div class="modal-backdrop" id="quickBackdrop">
+        <section class="modal compact-modal">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">Atalho</p>
+                    <h2>Lançamento rápido</h2>
+                </div>
+                <button class="icon-button" id="quickClose" aria-label="Fechar">×</button>
+            </div>
+            <div class="quick-help">
+                <span>Exemplos</span>
+                <code>+1290 salário</code>
+                <code>-230 mercado</code>
+                <code>-80 gasolina</code>
+            </div>
+            <form id="quickForm" class="quick-form">
+                <input id="quickInput" type="text" placeholder="+1290 salário">
+                <button class="primary-button" type="submit">Lançar</button>
+            </form>
+        </section>
+    </div>
+
+    <input id="importInput" type="file" accept="application/json" hidden>
+    <script src="js/app.js"></script>
+</body>
+</html>
